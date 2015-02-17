@@ -12,7 +12,7 @@ Run the app
 
     cd <path>/diagram-assignment && meteor
     
-Navigate to `http:localhost:3000`
+Navigate to `http://localhost:3000`
     
   
     
