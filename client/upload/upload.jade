@@ -3,11 +3,15 @@ template(name='upload')
 
 template(name='uploadOne')
   form#upload-form
-    h1 Please upload your diagram.
+    if dataUrl
+      img(src='#{dataUrl}')      
+      h1 Thank you!
+      h2 You can upload a different diagram until #{date}.
+    else
+      h1 Please upload your diagram.
     .file
       input(type='file' name='imageFile')
       label.waves-effect.waves-light.btn(for='file') Upload
-  img(src='#{dataUrl}')
 
 template(name='uploadTwo')
   form#details-form

@@ -9,6 +9,16 @@ Template.upload.helpers({
   }
 });
 
+Template.uploadOne.helpers({
+  dataUrl: function () {
+    var image = Images.findOne({
+      userId: Meteor.userId()
+    });
+
+    return image.dataUrl;
+  }
+});
+
 Template.uploadOne.events({
   'change input[type="file"]': function (event) {
     var files = event.target.files;
