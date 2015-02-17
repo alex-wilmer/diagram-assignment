@@ -1,0 +1,8 @@
+template(name='imageDetails')
+  .details
+    img(src='#{dataUrl}')
+    h1 #{title}
+    p #{notes}
+    +starRating    
+    hr
+    input#back(type='button' value='Back')

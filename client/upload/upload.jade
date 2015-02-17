@@ -1,0 +1,18 @@
+template(name='uploadOne')
+  .upload.form
+    h1 Please upload your diagram.
+    .browse
+      form
+        p.file
+          input(type='file' name='imageFile')
+          label(for='file') Upload
+
+template(name='uploadTwo')
+  .upload.form.details-form
+    form#details-form
+      img(src='#{dataUrl}')
+      input#title(placeholder='Title' autocomplete='off')
+      textarea#notes(placeholder='Notes')
+      input#submit(class='inline' type='submit' value='Save')
+      input#back(class='inline' type='button' value='Back')
+        

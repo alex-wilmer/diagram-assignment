@@ -1,0 +1,11 @@
+template(name='login')
+  form#login-form
+    h1 Sign in
+    .row
+      .input-field.col.s12
+        input#username.validate(type='text' name='username' autocomplete='off')
+        label(for="username") username
+      .input-field.col.s12
+        input#password(type='password' name='password')
+        label(for='password') password  
+      input.waves-effect.waves-light.btn(type='submit' value='Sign in')

@@ -1,0 +1,133 @@
+@import 'jeet'
+
+*, *:before, *:after
+  box-sizing border-box
+  
+body
+  font-family 'Roboto', sans-serif
+
+body,
+html 
+  height 100%  
+
+a
+  cursor pointer
+  
+h1
+  font-size 3em
+  font-weight 200
+  
+// Variables & Placeholders
+
+primary = #26a69a
+contrary = #FFF089
+
+$sidePad
+  padding 0 20px
+  
+$txtCenter
+  text-align center
+  
+// Positioning
+
+.left
+  float left
+  
+.right
+  float right
+
+pos(x, y)
+  position absolute
+  left (x)%
+  top (y)%
+  transform translate(-(x)%, -(y)%)
+
+true-height(n)
+  height n
+  line-height n
+
+//////
+
+header
+  @extend $sidePad  
+  true-height(75px)
+  background-color primary
+  color white
+  a
+    color contrary
+  
+main
+  @extend $sidePad
+  
+/////
+  
+#login-form
+  width 100%
+  max-width 300px
+  pos(50, 30)
+  @extend $txtCenter
+  
+.upload.form
+  text-align center
+  posY(20)
+  
+.upload.form.details-form
+  height calc(100% - 100px)
+  
+.browse
+  width 85%
+  max-width 400px
+  margin 0 auto
+  
+// upload
+
+#details-form
+  
+  & * 
+    display block
+    margin 0 auto
+    
+  img
+    max-width 400px
+
+  input,
+  textarea
+    margin-top 20px
+    
+// gallery
+
+.details,
+.gallery
+  text-align center
+  
+.details
+  img
+    max-width 400px
+    
+.mini-star
+  font-size 0.5em
+  
+.image-wrapper
+  position relative
+  display inline-block
+  margin-right 20px
+  
+.image-wrapper
+  .title
+    margin-top 10px
+
+.image
+  cursor pointer
+  size 150px
+  display inline-block
+  background-size cover
+  opacity 1
+  transform scale(1)
+  transition all 0.4s ease
+
+.image:hover
+  opacity 0.85
+  transform scale(0.85)  
+  
+
+  

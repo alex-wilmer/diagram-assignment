@@ -1,0 +1,13 @@
+head
+  title image discussion
+  meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')  
+  link(rel='shortcut icon' href='/favicon.ico')
+  
+template(name='layout')
+  header.z-depth-2
+    .left Chris Wilmer's Diagram Assignment
+    if currentUser
+      .right Logged in as: #{username} |
+        a.logout Logout
+  main
+    +yield

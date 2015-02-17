@@ -1,0 +1,18 @@
+template(name='admin')
+  .admin
+    +userTable
+
+template(name='userTable')
+  table.user-table.table
+    thead
+      tr
+        th Username
+        th Password
+        th Delete
+    tbody
+      +each users
+        tr
+          td #{username}
+          td {{userPassword username}}
+          td  
+            i.fa.fa-close         
