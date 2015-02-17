@@ -1,19 +1,20 @@
-Template.uploader.created = function () {
+Template.upload.created = function () {
   Session.set('uploadTemplate', 'uploadOne');
   Session.set('dataUrl', undefined); 
 }
 
-Template.uploader.helpers({
+Template.upload.helpers({
   uploadTemplate: function() {
     return Template[Session.get('uploadTemplate')];
   }
 });
 
 Template.uploadOne.events({
-  'change input[type="file"]': function (event, template) {
+  'change input[type="file"]': function (event) {
     var files = event.target.files;
-    if (!files.length) 
-      return;
+    if (!files.length) { 
+      return log('no file chosen');
+    }
     
     var file = files[0];
     var fileReader = new FileReader();
@@ -47,16 +48,20 @@ Template.uploadTwo.events({
 
     image = {
       userId: Meteor.userId()
+    , username: Meteor.user().username
     , dataUrl: Session.get('dataUrl')
-    , title: $('#title').val()
-    , notes: $('#notes').val()
     , ratings: []
     , submitted: new Date().getTime()
     };
 
-    Images.insert(image);
-    Router.go('gallery');
-
+    Meteor.call('insertImage', image, function(error, result) {
+      if (error) {
+        return console.log(error);
+      }
+      else {
+        Router.go('gallery');
+      }
+    });
   }
 , 'click #back': function () {
     Session.set('uploadTemplate', 'uploadOne');

@@ -8,11 +8,18 @@ template(name='userTable')
       tr
         th Username
         th Password
-        th Delete
+        th Group
+        th Ratings
+        th Average
     tbody
       +each users
         tr
           td #{username}
           td {{userPassword username}}
-          td  
-            i.fa.fa-close         
+          td #{group} 
+          if uploaded username
+            td #{ratings}
+            td #{average}
+          else
+            td Not submitted yet
+                     

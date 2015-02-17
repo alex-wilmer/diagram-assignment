@@ -25,10 +25,12 @@ contrary = #FFF089
 $sidePad
   padding 0 20px
   
-$txtCenter
-  text-align center
-  
 // Positioning
+
+.clear:after
+  content ''
+  display block
+  clear both
 
 .left
   float left
@@ -45,6 +47,9 @@ pos(x, y)
 true-height(n)
   height n
   line-height n
+  
+.center
+  text-align center  
 
 //////
 
@@ -65,35 +70,27 @@ main
   width 100%
   max-width 300px
   pos(50, 30)
-  @extend $txtCenter
+  @extend .center
   
-.upload.form
-  text-align center
-  posY(20)
-  
-.upload.form.details-form
-  height calc(100% - 100px)
-  
-.browse
-  width 85%
-  max-width 400px
-  margin 0 auto
+#upload-form
+  @extend .center
+  label
+    z-index -1   
   
 // upload
 
 #details-form
-  
-  & * 
+  width 600px
+  margin 0 auto
+  margin-top 40px
+  @extend .center  
+  img
     display block
     margin 0 auto
+    max-width 600px  
+    margin-bottom 20px
     
-  img
-    max-width 400px
 
-  input,
-  textarea
-    margin-top 20px
-    
 // gallery
 
 .details,

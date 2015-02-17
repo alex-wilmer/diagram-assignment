@@ -1,18 +1,16 @@
+template(name='upload')
+  +uploadTemplate
+
 template(name='uploadOne')
-  .upload.form
+  form#upload-form
     h1 Please upload your diagram.
-    .browse
-      form
-        p.file
-          input(type='file' name='imageFile')
-          label(for='file') Upload
+    .file
+      input(type='file' name='imageFile')
+      label.waves-effect.waves-light.btn(for='file') Upload
+  img(src='#{dataUrl}')
 
 template(name='uploadTwo')
-  .upload.form.details-form
-    form#details-form
-      img(src='#{dataUrl}')
-      input#title(placeholder='Title' autocomplete='off')
-      textarea#notes(placeholder='Notes')
-      input#submit(class='inline' type='submit' value='Save')
-      input#back(class='inline' type='button' value='Back')
-        
+  form#details-form
+    img(src='#{dataUrl}')
+    input#back.waves-effect.waves-light.btn.red.darken-1(type='button' value='Back')        
+    input.waves-effect.waves-light.btn(type='submit' value='Save')

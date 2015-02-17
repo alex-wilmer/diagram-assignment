@@ -15,12 +15,12 @@ Template.login.events({
         clearFields();       
         return log(err);
       }
-      else if (Meteor.user().roles.indexOf('admin') > -1) {        
+      else if (Meteor.user().roles) {        
         Router.go('admin');
         setTimeout(clearFields, 0);
       }
       else {
-        Router.go('uploader');  
+        Router.go('upload');  
       }
     });
        
