@@ -10,12 +10,15 @@ Template.upload.helpers({
 });
 
 Template.uploadOne.helpers({
-  dataUrl: function () {
+  dataUrl: function() {
     var image = Images.findOne({
       userId: Meteor.userId()
     });
 
     return image.dataUrl;
+  }
+, date: function() {
+    return Session.get('deadline');
   }
 });
 

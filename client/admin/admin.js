@@ -6,6 +6,12 @@ Template.userTable.helpers({
       }
     });
   }
+, userPassword: function (username) {
+    var password = Passwords.findOne({
+      username: username
+    });
+    return password.password;
+  }
 , uploaded: function (username) {
     var image = Images.findOne({
       username: username
@@ -14,11 +20,5 @@ Template.userTable.helpers({
     if (image) {
       return true;
     }
-  }
-, userPassword: function (username) {
-    var password = Passwords.findOne({
-      username: username
-    });
-    return password.password;
   }
 });

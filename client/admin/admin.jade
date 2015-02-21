@@ -9,17 +9,19 @@ template(name='userTable')
         th Username
         th Password
         th Group
-        th Ratings
-        th Average
+        th # of Ratings
+        th Average Rating
+        th Dot Product
     tbody
       +each users
         tr
           td #{username}
           td {{userPassword username}}
-          td #{group} 
+          td #{profile.group} 
           if uploaded username
             td #{ratings}
             td #{average}
+            td #{dotProduct}
           else
             td Not submitted yet
                      
