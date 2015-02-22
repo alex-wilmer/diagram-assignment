@@ -19,7 +19,7 @@ template(name='userTable')
           td {{userPassword username}}
           td #{profile.group} 
           if uploaded username
-            td #{ratings}
+            td {{ratings username}}
             td #{average}
             td #{dotProduct}
           else

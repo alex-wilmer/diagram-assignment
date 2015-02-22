@@ -7,10 +7,12 @@ Template.userTable.helpers({
     });
   }
 , userPassword: function (username) {
-    var password = Passwords.findOne({
-      username: username
-    });
-    return password.password;
+    if (Meteor.user()) {
+      var password = Passwords.findOne({
+        username: username
+      });
+      return password.password;
+    }
   }
 , uploaded: function (username) {
     var image = Images.findOne({
@@ -20,5 +22,11 @@ Template.userTable.helpers({
     if (image) {
       return true;
     }
+  }
+, ratings: function (username) {
+    var image = Images.findOne({
+      username: username
+    });
+    return image && 'Submitted';
   }
 });

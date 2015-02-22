@@ -1,6 +1,10 @@
 Template.upload.created = function () {
+  var image = Images.findOne({
+    userId: Meteor.userId()
+  });
+  var link = Session.get('dataUrl') || (image && image.imgurLink)
   Session.set('uploadTemplate', 'uploadOne');
-  Session.set('dataUrl', undefined); 
+  Session.set('dataUrl', link); 
 }
 
 Template.upload.helpers({
@@ -10,12 +14,8 @@ Template.upload.helpers({
 });
 
 Template.uploadOne.helpers({
-  dataUrl: function() {
-    var image = Images.findOne({
-      userId: Meteor.userId()
-    });
-
-    return image.dataUrl;
+  imgurLink: function() {
+    return Session.get('dataUrl');
   }
 , date: function() {
     return Session.get('deadline');
@@ -29,8 +29,8 @@ Template.uploadOne.events({
       return log('no file chosen');
     }
     
-    var file = files[0];
-    var fileReader = new FileReader();
+    var file = files[0]
+      , fileReader = new FileReader();
 
     img = new Image();
     img.onload = function () {
@@ -59,22 +59,77 @@ Template.uploadTwo.events({
   'submit #details-form': function (event) {
     event.preventDefault();
 
-    image = {
+    var image = Images.findOne({
       userId: Meteor.userId()
-    , username: Meteor.user().username
-    , dataUrl: Session.get('dataUrl')
-    , ratings: []
-    , submitted: new Date().getTime()
-    };
-
-    Meteor.call('insertImage', image, function(error, result) {
-      if (error) {
-        return console.log(error);
-      }
-      else {
-        Router.go('gallery');
-      }
     });
+
+    if (image) {
+      Imgur.delete({
+        apiKey: 'a1f8ff831c67e9b'
+      , deleteHash: image.deleteHash
+      }
+      , function(error, data) {
+          if (error) {
+            return log(error);
+          }
+
+          Imgur.upload({
+            apiKey: 'a1f8ff831c67e9b'
+          , image: Session.get('dataUrl')
+          }
+          , function(error, data) {
+              if (error) {
+                return log(error);
+              }
+
+              var newProperties = {
+                imgurLink: data.link
+              , submitted: new Date().getTime()
+              };
+
+              Images.update(image._id, {
+                $set: newProperties
+              }
+              , function(error) {
+                  if (error) {
+                    return log(error);
+                  }
+                }
+              );
+            }
+          );
+        }
+      );
+    }
+    else {
+      Imgur.upload({
+        apiKey: 'a1f8ff831c67e9b'
+      , image: Session.get('dataUrl')
+      }
+      , function(error, data) {
+          if (error) {
+            return log(error);
+          }      
+
+          var image = {
+            userId: Meteor.userId()
+          , username: Meteor.user().username
+          , imgurLink: data.link
+          , deleteHash: data.deletehash  
+          , ratings: []
+          , submitted: new Date().getTime()
+          };
+
+          Meteor.call('insertImage', image, function(error, result) {
+            if (error) {
+              return log(error);
+            }
+          });
+        }
+      );
+    }
+
+    Router.go('gallery');
   }
 , 'click #back': function () {
     Session.set('uploadTemplate', 'uploadOne');

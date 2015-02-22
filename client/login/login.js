@@ -1,3 +1,7 @@
+Template.login.created = function() {
+  Session.set('dataUrl', undefined);
+}
+
 Template.login.events({
   'submit #login-form' : function (event) {
     event.preventDefault();

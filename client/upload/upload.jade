@@ -3,8 +3,8 @@ template(name='upload')
 
 template(name='uploadOne')
   form#upload-form
-    if dataUrl
-      img(src='#{dataUrl}')      
+    if imgurLink
+      img(src='#{imgurLink}')      
       h1 Thank you!
       h2 You can upload a different diagram until #{date}.
     else

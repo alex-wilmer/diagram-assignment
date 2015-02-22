@@ -21,3 +21,4 @@ Meteor.publish('imageByUserId', function(userId) {
 Meteor.publish('imageById', function(id) {
   return Images.find(id);
 });
+
