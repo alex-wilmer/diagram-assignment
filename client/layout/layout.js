@@ -5,6 +5,9 @@ Template.layout.helpers({
       return user.username;
     }
   }
+, adminPage: function() {
+    return Router.current().route.getName() === 'admin';
+  }
 })
 
 Template.layout.events({

@@ -6,6 +6,8 @@ head
 template(name='layout')
   header.z-depth-2
     .left Chris Wilmer's Diagram Assignment
+      if adminPage
+        input.search-input(placeholder='Search..')
     if currentUser
       .right Logged in as: #{username} |
         a.logout Logout

@@ -19,8 +19,8 @@ template(name='userTable')
           td {{userPassword username}}
           td #{profile.group} 
           if uploaded username
-            td {{ratings username}}
-            td #{average}
+            td {{ratingsCount username}}
+            td {{average username}}
             td #{dotProduct}
           else
             td Not submitted yet
