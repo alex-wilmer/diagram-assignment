@@ -4,7 +4,6 @@ Template.imageDetails.created = function() {
     image.ratings.forEach(function(item) {
       if (item.userId === Meteor.userId()) {
         var selector = '.rating .star:nth-child(' + weirdInvert(item.rating) + ')';
-        // var selector = '.rating .star:nth-child(3)';
         setTimeout(function() {
           $(selector).prop('checked', true);
         },0); 

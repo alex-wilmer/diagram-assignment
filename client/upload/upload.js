@@ -11,6 +11,9 @@ Template.upload.helpers({
   uploadTemplate: function() {
     return Template[Session.get('uploadTemplate')];
   }
+, deadlineMissedMessage: function() {
+    return Session.get('deadlineMissedMessage');
+  }
 });
 
 Template.uploadOne.helpers({

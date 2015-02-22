@@ -1,12 +1,30 @@
 Template.layout.created = function() {
-  Session.set('searchTerm', undefined);
+  Session.set('searchTerm', undefined); 
 }
+
+Template.layout.helpers({
+  deadlineLoaded: function() {
+    return Session.get('deadline');
+  }
+, deadlinePassed: function() {
+    return Session.get('deadlinePassed');
+  }
+});
 
 Template.layout.events({
   'keydown .search-input': function (event) {
     setTimeout(function() {
       Session.set('searchTerm', event.target.value);
     }, 0);
+  }
+, 'click #activate-deadline': function() {
+    Meteor.call('activateDeadline', undefined, function(error, result) {
+      if (error) {
+        return log(error);
+      }
+
+      Session.set('deadlinePassed', true);
+    });
   }
 });
 
@@ -32,15 +50,6 @@ Template.userTable.helpers({
         username: username
       });
       return password.password;
-    }
-  }
-, uploaded: function (username) {
-    var image = Images.findOne({
-      username: username
-    });
-
-    if (image) {
-      return true;
     }
   }
 , ratingsCount: function (username) {

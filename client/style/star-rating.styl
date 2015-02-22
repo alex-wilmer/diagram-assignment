@@ -23,9 +23,21 @@
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700  } /* hover previous stars in list */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700 } /* hover previous stars in list */
 
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85  } 
+.rating > input:checked ~ label:hover ~ label { color: #FFED85 } 
+
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+  border: none
+}
+[type="radio"] + label:before, [type="radio"] + label:after {
+  transition: none
+}
+[type="radio"]:checked + label:after {
+  border: none
+  background-color: transparent
+}

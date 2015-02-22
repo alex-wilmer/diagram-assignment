@@ -16,12 +16,12 @@ template(name='userTable')
       +each users
         tr
           td #{username}
-          td {{userPassword username}}
-          td #{profile.group} 
-          if uploaded username
+          td {{userPassword username}}          
+          if profile.submitted
+            td #{group} 
             td {{ratingsCount username}}
             td {{average username}}
             td #{dotProduct}
           else
-            td Not submitted yet
+            td Not submitted
                      

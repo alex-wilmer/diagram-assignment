@@ -5,9 +5,16 @@ head
   
 template(name='layout')
   header.z-depth-2
-    .left Chris Wilmer's Diagram Assignment
+    .left 
+      span Chris Wilmer's Diagram Assignment
       if adminPage
         input.search-input(placeholder='Search..')
+        if deadlineLoaded
+          unless deadlinePassed
+            input#activate-deadline.waves-effect.waves-light.btn.red.darken-1(type='button' value='Activate Deadline')  
+          else
+            span.yellow-text Deadline passed!     
+
     if currentUser
       .right Logged in as: #{username} |
         a.logout Logout

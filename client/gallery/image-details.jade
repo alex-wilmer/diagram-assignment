@@ -1,8 +1,5 @@
 template(name='imageDetails')
   .details
-    img(src='#{dataUrl}')
-    h1 #{title}
-    p #{notes}
+    img(src='#{imgurLink}')
     +starRating    
-    hr
-    input#back(type='button' value='Back')
+    input#back.waves-effect.waves-light.btn(type='button' value='Back')

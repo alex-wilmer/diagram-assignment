@@ -4,7 +4,7 @@ template(name='gallery')
     +each images
       .image-wrapper
         a(href='{{pathFor "imageDetails"}}')
-          .image(style='background-image:url("#{dataUrl}")')
+          .image(style='background-image:url("#{imgurLink}")')
         .title #{title}
         //- .mini-star  
         //-   +starRating

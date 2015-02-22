@@ -1,5 +1,8 @@
 template(name='upload')
-  +uploadTemplate
+  unless deadlineMissedMessage
+    +uploadTemplate
+  else
+    h1.center #{deadlineMissedMessage}
 
 template(name='uploadOne')
   form#upload-form
