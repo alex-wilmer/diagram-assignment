@@ -1,9 +1,13 @@
 Meteor.startup(function () {
 
   var admin = Meteor.users.findOne({username:'admin'})
-    , deadline = 
-        moment('2015 10 25 5 30', 'YYYY MM DD H mm')
-          .format('M/D/YYYY H:mm A');
+    , configOptions = Config.findOne()
+
+  if (!configOptions) {    
+    Config.insert({
+        deadline: new Date('December 17, 2015 18:00:00')
+    });
+  }
 
   if (!admin) {
 
@@ -14,24 +18,33 @@ Meteor.startup(function () {
 
     Roles.addUsersToRoles(id, ['admin']);
 
-    _.each(range(0,10), function(n) {
-      var user = {
-        username: 'student' + n
-      , password: randomString()  
-      , profile: {
-          submitted: false
-        }    
-      };
-      Accounts.createUser(user);
-      Passwords.insert(user);
-    });
+    // This block is just for testing.
+
+      // loop: create users and submit a diagram for them
+      _.each(range(0,19), function(n) {
+        var user = {
+              username: 'student' + n
+            , password: randomString()  
+            , profile: {
+                submitted: true
+              }    
+            }    
+          , id = Accounts.createUser(user)
+          , image = {
+              userId: id
+            , username: user.username
+            , imgurLink: 'http://www.physik.uni-augsburg.de/chemie/Forschungsgebiete/MOFs/MOF-5.jpg'
+            , ratings: []
+            , submitted: new Date().getTime()
+          };
+
+        Images.insert(image);
+        Passwords.insert(user);
+      });
   }
 
   Meteor.methods({
-    getDeadline: function() {
-      return deadline;
-    }
-  , activateDeadline: function() { 
+    activateDeadline: function() { 
       var admin = Meteor.users.findOne({username:'admin'})
       if ((admin && admin._id) === this.userId) {
         var users = Meteor.users.find({
@@ -58,7 +71,9 @@ Meteor.startup(function () {
           });
         });
 
-        return deadline = new Date(); 
+        Config.update({}, {
+          $set: {deadline: new Date()}
+        });
       }
     }
   });

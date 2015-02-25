@@ -3,11 +3,9 @@ Template.layout.created = function() {
 }
 
 Template.layout.helpers({
-  deadlineLoaded: function() {
-    return Session.get('deadline');
-  }
-, deadlinePassed: function() {
-    return Session.get('deadlinePassed');
+  deadlinePassed: function() {
+    var date = new Date();
+    return date > Config.findOne().deadline;
   }
 });
 
@@ -22,8 +20,6 @@ Template.layout.events({
       if (error) {
         return log(error);
       }
-
-      Session.set('deadlinePassed', true);
     });
   }
 });

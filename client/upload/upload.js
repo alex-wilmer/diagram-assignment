@@ -21,7 +21,7 @@ Template.uploadOne.helpers({
     return Session.get('dataUrl');
   }
 , date: function() {
-    return Session.get('deadline');
+    return moment(new Date(Config.findOne().deadline)).format('MMMM Do YYYY, h:mm a');
   }
 });
 

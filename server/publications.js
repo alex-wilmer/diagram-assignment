@@ -1,5 +1,9 @@
 // Admin
 
+Meteor.publish('config', function() {
+  return Config.find();
+});
+
 Meteor.publish('users', function() {
   return Meteor.users.find();
 });
