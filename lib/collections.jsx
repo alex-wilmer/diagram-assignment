@@ -1,7 +1,8 @@
 Images = new Mongo.Collection('images')
 
 Images.allow({
-  update: (userId, image) => image && image.userId === userId
+  // update: (userId, image) => image && image.userId === userId
+  update: () => true
 })
 
 Meteor.methods({

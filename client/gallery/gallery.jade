@@ -5,6 +5,8 @@ template(name='gallery')
       .image-wrapper
         a(href='{{pathFor "imageDetails"}}')
           .image(style='background-image:url("#{imgurLink}")')
+          i.fa.fa-check(style='{{alreadyVoted this}}')
+          span #{userId}
         .title #{title}
         //- .mini-star  
         //-   +starRating

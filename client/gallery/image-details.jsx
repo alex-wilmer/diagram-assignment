@@ -1,4 +1,4 @@
-Template.imageDetails.created = () => {
+Template.imageDetails.created = function () {
   let image = Images.findOne(this.data._id)
   if (image.ratings) {
     image.ratings.forEach(item => {
@@ -22,22 +22,15 @@ Template.imageDetails.events({
     }
 
     let image = Images.findOne(this._id)
-    if (!image.ratings.length) {
+
+    let alreadyVoted =
+      image.ratings.some(x => x.userId === Meteor.userId())
+
+    if (!alreadyVoted) {
       Images.update(this._id, {
         $push: { ratings: rating }
       })
     }
-    else {
-      image.ratings.forEach(item => {
-        if (item.userId === Meteor.userId())
-          item.rating = event.target.id.split('').pop()
-      })
-      
-      Images.update(this._id, {
-        $set: { ratings: image.ratings }
-      })
-    }
-
   }
 , 'click #back': function () {
     Router.go('gallery')

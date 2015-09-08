@@ -44,7 +44,7 @@ Meteor.startup(() => {
   }
 
   Meteor.methods({
-    activateDeadline: () => {
+    activateDeadline: function () {
       let admin = Meteor.users.findOne({ username: 'admin' })
       if ((admin && admin._id) === this.userId) {
         let users = Meteor.users.find({

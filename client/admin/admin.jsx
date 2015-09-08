@@ -3,7 +3,8 @@ Template.layout.created = () => Session.set('searchTerm', undefined)
 Template.layout.helpers({
   deadlinePassed: function () {
     let date = new Date()
-    return date > Config.findOne().deadline
+    if (Config.findOne())
+      return date > Config.findOne().deadline
   }
 })
 
@@ -51,11 +52,11 @@ Template.userTable.helpers({
 , average: function (username) {
     let image = Images.findOne({ username })
     if (image && image.ratings.length) {
-      let average = 0
-      image.ratings.forEach(rating => {
-        average += rating.rating
-      })
-      return average / image.ratings.length
+      let total = image.ratings
+        .map(x => +x.rating)
+        .reduce((a, b) => a + b)
+
+      return total / image.ratings.length
     }
   }
 })
