@@ -73,9 +73,7 @@ Router.route('/gallery', {
     if (Meteor.user()) {
       return {
         images: Images.find({
-          group: Meteor.user().profile.group === 'A' ? 'B' : 'A'
-        } , {
-          limit: 5
+          _id: { $in: Meteor.user().profile.imagesToRate }
         })
       }
     }

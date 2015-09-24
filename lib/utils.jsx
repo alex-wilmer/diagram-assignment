@@ -33,7 +33,7 @@ shuffle = array => {
 // star rating
 
 weirdInvert = n => {
-  switch(n) {
+  switch (n) {
     case '1':
       return 9
     case '2':
@@ -45,4 +45,13 @@ weirdInvert = n => {
     case '5':
       return 1
   }
+}
+
+let { floor, random } = Math
+
+getRandomIndex = length => floor(random() * length)
+
+spliceImage = arr => {
+  let x = getRandomIndex(arr.length)
+  return arr.splice(x, 1)[0]
 }
