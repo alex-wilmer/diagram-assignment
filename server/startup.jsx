@@ -1,44 +1,64 @@
 Meteor.startup(() => {
+  let number_of_students = 20
 
   let admin = Meteor.users.findOne({ username: 'admin' })
-    , configOptions = Config.findOne()
+  let configOptions = Config.findOne()
 
-  if (!configOptions) {
-    Config.insert({
-      deadline: new Date('December 17, 2015 18:00:00')
-    })
-  }
+  configOptions || Config.insert({
+    deadline: // SET DEADLINE
+      new Date('December 10, 2016 18:00:00')
+  })
 
-  if (!admin) {
-    let id = Accounts.createUser({
-      username: 'admin'
-    , password: 'musicwizard'
-    })
+  admin || (() => {
+    Roles.addUsersToRoles(
 
-    Roles.addUsersToRoles(id, ['admin'])
+      // Change username and password
 
-    // This block is just for testing.
-    // loop: create users and submit a diagram for them
-    _.each(range(0,19), n => {
+      Accounts.createUser({
+        username: 'admin'
+      , password: 'musicwizard'
+      })
+    , ['admin']
+    )
+
+    // Create students in a loop
+
+    range(0, number_of_students).forEach(x => {
       let user = {
-        username: `student${ n }`
-      , password: randomString()
-      , profile: { submitted: true }
-      }
-          
-      let image = {
-        userId: Accounts.createUser(user)
-      , username: user.username
-      , imgurLink:
-          'http://www.physik.uni-augsburg.de/chemie/Forschungsgebiete/MOFs/MOF-5.jpg'
-      , ratings: []
-      , submitted: new Date().getTime()
+        username: `student${ x }`
+      , password: `password${ x }`
       }
 
-      Images.insert(image)
+      Accounts.createUser(user)
       Passwords.insert(user)
     })
-  }
+  }())
+
+    /*
+       This block is for testing.
+    */
+
+    // loop: create users and submit a diagram for them
+
+    // _.each(range(0, number_of_students - 1), n => {
+    //   let user = {
+    //     username: `student${ n }`
+    //   , password: randomString()
+    //   , profile: { submitted: true }
+    //   }
+    //
+    //   let image = {
+    //     userId: Accounts.createUser(user)
+    //   , username: user.username
+    //   , imgurLink:
+    //       'http://www.physik.uni-augsburg.de/chemie/Forschungsgebiete/MOFs/MOF-5.jpg'
+    //   , ratings: []
+    //   , submitted: new Date().getTime()
+    //   }
+    //
+    //   Images.insert(image)
+    //   Passwords.insert(user)
+    // })
 
   Meteor.methods({
     activateDeadline: function () {
@@ -78,19 +98,24 @@ Meteor.startup(() => {
         let imagesA = images.filter(x => x.group === 'A')
         let imagesB = images.filter(x => x.group === 'B')
 
+
         users.forEach(user => {
           let { group } = user.profile
           let imagesToRate = []
 
-          for (let i = 0; i < 5; i++) {
+          range(0, 4).forEach(x => {
             imagesToRate = [
               ...imagesToRate
-            , group === 'A' ? spliceImage(imagesB)._id : spliceImage(imagesA)._id
+            , group === 'A'
+                ? spliceImage(imagesB)._id
+                : spliceImage(imagesA)._id
             ]
+
+            // spliced array may be empty, fill it up again.
 
             if (!imagesA.length) imagesA = images.filter(x => x.group === 'A')
             if (!imagesB.length) imagesB = images.filter(x => x.group === 'B')
-          }
+          })
 
           Meteor.users.update(user._id, {
             $set: {

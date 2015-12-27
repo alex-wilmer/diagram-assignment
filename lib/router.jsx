@@ -41,8 +41,11 @@ Router.route('/', {
       this.redirect('admin')
     }
     else {
+
       let date = new Date()
         , deadline = Config.findOne().deadline
+
+      console.log(date, deadline)
 
       if (date > deadline) {
         let image = Images.findOne()
